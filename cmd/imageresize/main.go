@@ -41,9 +41,26 @@ func main() {
 	os.Exit(Run(opt))
 }
 
+type Image interface {
+	Resize(width, height uint) error
+}
+
 func Run(option *option) int {
-	image := image.New(option.filepath)
-	if err := image.Resize(uint(option.width), uint(option.height)); nil != err {
+	// ファイルオープン
+	file, err := os.Open(option.filepath)
+	if err != nil {
+		return imageresize.ExitCodeFileError
+	}
+	defer file.Close()
+
+	// 画像オブジェクトの取得
+	i, err := image.New(file)
+	if err != nil {
+		return imageresize.ExitCodeError
+	}
+
+	// リサイズ
+	if err := i.Resize(uint(option.width), uint(option.height)); nil != err {
 		fmt.Printf("Exit due to fail resize[%d]: %s", imageresize.ExitCodeError, err.Error())
 		return imageresize.ExitCodeError
 	}
