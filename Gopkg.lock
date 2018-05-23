@@ -7,9 +7,15 @@
   revision = "85dcd8368eba387e65a03488b003e233994e87e9"
   version = "v3.3"
 
+[[projects]]
+  branch = "master"
+  name = "github.com/nfnt/resize"
+  packages = ["."]
+  revision = "83c6a9932646f83e3267f353373d47347b6036b2"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "5897ba8d7d8f06a9351c7aba69c139c50dd459a0517036218f237989a0864b72"
+  inputs-digest = "6858940a45e9210f8ec26737c2231ebc1d48a4ed922a46aaabdd5a0719abc29f"
   solver-name = "gps-cdcl"
   solver-version = 1
