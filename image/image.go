@@ -3,6 +3,7 @@ package image
 import (
 	"os"
 	"image"
+	"errors"
 )
 
 type Image interface {
@@ -13,11 +14,8 @@ func New(f *os.File) (Image, error) {
 	_, format, err := image.DecodeConfig(f)
 	if err != nil {
 		// 画像フォーマットではない場合はエラーが発生する
-		return Image, err
+		return nil, err
 	}
-
-
-
 
 	switch format {
 	case "png":
@@ -29,7 +27,6 @@ func New(f *os.File) (Image, error) {
 	case "gif":
 		return &Gif{}, nil
 	default:
-		//TODO
-		return Image, err
+		return nil, errors.New("image unknown")
 	}
 }

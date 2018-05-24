@@ -11,7 +11,7 @@ type Png struct {
 	File *os.File
 }
 
-func(p *Png) Resize(width, height uint) error {
+func(p Png) Resize(width, height uint) error {
 	// デコードしてイメージオブジェクトを準備
 	img, _, err := image.Decode(p.File)
 	if err != nil {
