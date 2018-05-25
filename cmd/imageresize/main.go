@@ -41,10 +41,6 @@ func main() {
 	os.Exit(Run(opt))
 }
 
-type Image interface {
-	Resize(width, height uint) error
-}
-
 func Run(option *option) int {
 	// ファイルオープン
 	file, err := os.Open(option.filepath)
