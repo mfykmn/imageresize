@@ -8,18 +8,12 @@ import (
 )
 
 type Png struct {
-	File *os.File
+	Image image.Image
 }
 
 func(p Png) Resize(width, height uint) error {
-	// デコードしてイメージオブジェクトを準備
-	img, _, err := image.Decode(p.File)
-	if err != nil {
-		return err
-	}
-
 	// リサイズ
-	m := resize.Resize(width, height, img, resize.Lanczos3)
+	m := resize.Resize(width, height, p.Image, resize.Lanczos3)
 
 	out, err := os.Create("resize.png")
 	if err != nil {

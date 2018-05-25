@@ -56,6 +56,7 @@ func Run(option *option) int {
 	// 画像オブジェクトの取得
 	i, err := image.New(file)
 	if err != nil {
+		fmt.Println(err.Error())
 		return imageresize.ExitCodeError
 	}
 
