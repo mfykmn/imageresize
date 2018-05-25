@@ -7,15 +7,17 @@ import (
 	"image/png"
 )
 
+const format = ".png"
+
 type Png struct {
-	Image image.Image
+	image image.Image
 }
 
 func(p Png) Resize(width, height uint) error {
 	// リサイズ
-	m := resize.Resize(width, height, p.Image, resize.Lanczos3)
+	m := resize.Resize(width, height, p.image, resize.Lanczos3)
 
-	out, err := os.Create("resize.png")
+	out, err := os.Create("resized"+format)
 	if err != nil {
 		return err
 	}

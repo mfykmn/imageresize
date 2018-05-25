@@ -19,7 +19,7 @@ func New(file *os.File) (Image, error) {
 	switch format {
 	case "png":
 		return &Png{
-			Image: img,
+			image: img,
 		}, nil
 	case "jpg":
 		return &Jpg{}, nil

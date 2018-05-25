@@ -3,6 +3,9 @@
 ```bash
 $ make build
 $ ./bin/imageresize  --f ./_tools/sample-image/500-500.png
+
+or 
+$ go run cmd/imageresize/main.go --f ./_tools/sample-image/500-500.png
 ```
 
 
