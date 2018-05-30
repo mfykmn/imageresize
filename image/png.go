@@ -1,23 +1,21 @@
 package image
 
 import (
-	"os"
 	"image"
-	"github.com/nfnt/resize"
 	"image/png"
+	"os"
+
+	"github.com/nfnt/resize"
 )
 
-const format = ".png"
-
-type Png struct {
+type PngService struct {
 	image image.Image
 }
 
-func(p Png) Resize(width, height uint) error {
-	// リサイズ
+func (p PngService) Resize(width, height uint) error {
 	m := resize.Resize(width, height, p.image, resize.Lanczos3)
 
-	out, err := os.Create("resized"+format)
+	out, err := os.Create("resized." + Png.String())
 	if err != nil {
 		return err
 	}

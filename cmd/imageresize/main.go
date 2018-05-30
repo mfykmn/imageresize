@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"os"
-	"flag"
 
 	"github.com/mafuyuk/imageresize"
 	"github.com/mafuyuk/imageresize/image"
@@ -11,11 +11,10 @@ import (
 	"github.com/go-ozzo/ozzo-validation"
 )
 
-
 type option struct {
-  filepath string
-  width int
-	height int
+	filepath string
+	width    int
+	height   int
 }
 
 func (o option) Validate() error {

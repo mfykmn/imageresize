@@ -1,9 +1,9 @@
 package image
 
 import (
-	"os"
-	"image"
 	"errors"
+	"image"
+	"os"
 )
 
 type Image interface {
@@ -17,14 +17,16 @@ func New(file *os.File) (Image, error) {
 	}
 
 	switch format {
-	case "png":
-		return &Png{
+	case Png.String():
+		return &PngService{
 			image: img,
 		}, nil
-	case "jpg":
-		return &Jpg{}, nil
-	case "gif":
-		return &Gif{}, nil
+	case Jpeg.String():
+		return &JpegService{
+			image: img,
+		}, nil
+	case Gif.String():
+		return &GifService{}, nil
 	default:
 		return nil, errors.New("image unknown")
 	}

@@ -16,3 +16,6 @@ vendor
 
 # binary
 bin
+
+# go generate
+*_enumer.go

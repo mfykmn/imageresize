@@ -1,11 +1,13 @@
 HAVE_GOLINT:=$(shell which golint)
 HAVE_DEP:=$(shell which dep)
+HAVE_ENUMER:=$(shell which enumer)
 
 ## Go
 .PHONY: setup all-check lint vet test build
-setup: dep
+setup: dep enumer
 	@echo "go setup"
 	@dep ensure
+	@go generate ./...
 
 all-check: lint vet test
 	@echo "all check"
@@ -27,7 +29,7 @@ build: setup
 	@go build -o ./bin/imageresize ./cmd/imageresize
 
 ## Go package
-.PHONY: dep golint
+.PHONY: dep golint enumer
 dep:
 ifndef HAVE_DEP
 	@echo "Installing dep"
@@ -38,4 +40,10 @@ golint:
 ifndef HAVE_GOLINT
 	@echo "Installing linter"
 	@go get -u github.com/golang/lint/golint
+endif
+
+enumer:
+ifndef HAVE_ENUMER
+	@echo "Installing enumer"
+	@go get -u github.com/alvaroloes/enumer
 endif

@@ -1,8 +1,8 @@
 package image
 
-type Gif struct {
+type GifService struct {
 }
 
-func(g *Gif) Resize(width, height uint) error {
+func (g *GifService) Resize(width, height uint) error {
 	return nil
 }
