@@ -2,10 +2,11 @@
 
 ```bash
 $ make build
-$ ./bin/imageresize  --f ./_tools/sample-image/500-500.png
+$ ./bin/imageresize  --f ./_tools/sample-image/sample.png
 
 or 
-$ go run cmd/imageresize/main.go --f ./_tools/sample-image/500-500.png
+$ go run cmd/imageresize/main.go --f ./_tools/sample-image/sample.png
+$ go run cmd/imageresize/main.go --f ./_tools/sample-image/sample.jpeg
 ```
 
 
