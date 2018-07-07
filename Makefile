@@ -26,7 +26,7 @@ test: setup
 
 build: setup
 	@echo "go build"
-	@go build -o ./bin/imageresize ./cmd/imageresize
+	@go build -ldflags "-X main.version=$(shell git describe --tags)" -o ./bin/imageresize ./cmd/imageresize
 
 ## Go package
 .PHONY: dep golint enumer
