@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"io"
 	"image/gif"
+	"io/ioutil"
 )
 
 type Image interface {
@@ -13,17 +14,12 @@ type Image interface {
 }
 
 func New(file io.Reader) (Image, error) {
-	buf := new(bytes.Buffer)
-	buf2 := new(bytes.Buffer)
-	io.Copy(buf, file)
-	io.Copy(buf2, file)
+	buf, _ := ioutil.ReadAll(file)
+	b0 := bytes.NewBufferString(string(buf))
+	b1 := bytes.NewBufferString(string(buf))
 
 	// formatによって処理を切り分け
-	img, format, err := image.Decode(buf)
-	if err != nil {
-		return nil, err
-	}
-	_, _, err = image.Decode(buf2)
+	img, format, err := image.Decode(b0)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +34,7 @@ func New(file io.Reader) (Image, error) {
 			image: img,
 		}, nil
 	case Gif.String():
-		img, err := gif.DecodeAll(buf)
+		img, err := gif.DecodeAll(b1)
 		if err != nil {
 			return nil, err
 		}
