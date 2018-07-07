@@ -25,12 +25,26 @@ func (o option) Validate() error {
 	)
 }
 
+var version = "1.0.0"
+
 func main() {
 	var opt = &option{}
 	flag.StringVar(&opt.filepath, "f", "", "File path of the image you want to change")
 	flag.IntVar(&opt.width, "w", 100, "")
 	flag.IntVar(&opt.height, "h", 100, "")
+
+
+	var showVersion bool
+	flag.BoolVar(&showVersion, "v", false, "Show version")
+	flag.BoolVar(&showVersion, "version", false, "Show version")
+
 	flag.Parse()
+
+	if showVersion {
+		fmt.Println("version:", version)
+		return
+	}
+
 
 	if err := opt.Validate(); err != nil {
 		fmt.Printf("Exit due to option error[%d]: %s", imageresize.ExitCodeError, err.Error())
