@@ -3,15 +3,24 @@ package image
 import (
 	"errors"
 	"image"
-	"os"
+	"bytes"
+	"io"
+	"image/gif"
 )
 
 type Image interface {
 	Resize(width, height uint) error
 }
 
-func New(file *os.File) (Image, error) {
-	img, format, err := image.Decode(file)
+func New(in io.Reader) (Image, error) {
+	buf := new(bytes.Buffer)
+	gifDecodeTarget := new(bytes.Buffer)
+
+	w := io.MultiWriter(buf, gifDecodeTarget)
+	io.Copy(w, in)
+
+	// formatによって処理を切り分け
+	img, format, err := image.Decode(buf)
 	if err != nil {
 		return nil, err
 	}
@@ -26,7 +35,13 @@ func New(file *os.File) (Image, error) {
 			image: img,
 		}, nil
 	case Gif.String():
-		return &GifService{}, nil
+		img, err := gif.DecodeAll(gifDecodeTarget)
+		if err != nil {
+			return nil, err
+		}
+		return &GifService{
+			image: img,
+		}, nil
 	default:
 		return nil, errors.New("image unknown")
 	}
