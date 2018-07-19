@@ -4,16 +4,20 @@ import (
 	"errors"
 	"image"
 	"image/gif"
-	"os"
+	"bytes"
+	"io"
 )
 
 type Image interface {
 	Resize(width, height uint) error
 }
 
-func New(in *os.File) (Image, error) {
+func New(in io.Reader) (Image, error) {
+	buf := bytes.NewBuffer(nil)
+	r := io.TeeReader(in, buf)
+
 	// formatによって処理を切り分け
-	img, format, err := image.Decode(in)
+	img, format, err := image.Decode(r)
 	if err != nil {
 		return nil, err
 	}
@@ -28,8 +32,7 @@ func New(in *os.File) (Image, error) {
 			image: img,
 		}, nil
 	case Gif.String():
-		in.Seek(0, 0) // インデックスを先頭に戻す
-		gifimg, err := gif.DecodeAll(in)
+		gifimg, err := gif.DecodeAll(buf)
 		if err != nil {
 			return nil, err
 		}
