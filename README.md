@@ -1,4 +1,4 @@
-# mageresize
+# Imageresize
 
 ```bash
 $ make build
